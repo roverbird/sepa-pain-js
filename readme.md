@@ -1,72 +1,65 @@
-# sepa-pain-js
+SEPA PAIN XML Viewer and Generator je preprosta spletna aplikacija, ki omogoča podjetjem pregledovanje, izvoz in ustvarjanje SEPA plačilnih nalogov v standardu ISO 20022 (pain.001.001.03). Uporabniki lahko naložijo obstoječe SEPA XML datoteke, pregledajo posamezna plačila, jih izvozijo v CSV ali ustvarijo nove SEPA plačilne naloge prek enostavnega spletnega obrazca. Vse se obdeluje lokalno v brskalniku, brez pošiljanja podatkov na strežnike.
 
-A lightweight, fully client-side SEPA XML (ISO 20022 `pain.001.001.03`) viewer and parser written in JavaScript. This tool helps users parse and visualize batch SEPA Credit Transfer XML files directly in the browser — no upload or backend required. 100% privacy in-browser tool, no data collected.
+Online demo: 
 
-This JS parser implements the following messages out of the ISO 20022 standard:
+## 📄 About SEPA XML
 
-Credit Transfer Initiation (pain.001.001.03)
+**SEPA PAIN XML Viewer and Generator** is a lightweight, browser-based application designed for **corporate users** and **finance teams** who need to work with SEPA payment files based on the **ISO 20022** standard.
 
-_Pain_ is a shortcut for _Payment Initiation_.
-
----
-
-## 💡 What It Does
-
-- Parses SEPA XML payment files (`pain.001.001.03`, i.e. CustomerCreditTransferInitiationV03)
-- Displays all individual transactions in an interactive table
-- Supports multiple `<PmtInf>` blocks
-- Lets users download the entire transaction table as CSV
-- Allows selection of a single transaction and download of a valid SEPA XML for that one transaction only
+The app supports two main workflows:
+- **Viewing and Parsing**: Upload and preview SEPA **payment initiation messages** (`pain.001.001.03` format) containing any number of transactions transactions. Each payment can be individually selected, exported to CSV, or downloaded as a single, standalone SEPA XML file.
+- **Generating New Payments**: Fill out a **web form** to manually create new SEPA XML files and generate compliant `pain.001.001.03` messages ready for submission to banks.
 
 ---
 
-## 🛠️ Use Cases
+## 📚 Background: What Are PAIN Messages?
 
-- Financial operations teams previewing generated SEPA files
-- Developers working on ERP-to-bank payment integrations
-- QA & compliance checking of XML-based payment instructions
-- Educational/demo tool for ISO 20022-based SEPA standards
+SEPA (Single Euro Payments Area) payments rely on the **ISO 20022** XML messaging standard to structure and exchange payment data between banks and payment service providers.  
+The **PAIN (Payment Initiation)** message category is used by **corporate customers** to instruct their banks to process credit transfers and direct debits.
 
----
+Specifically, this app supports:
 
-## 📁 Supported Message Format
+| Message | Use Case                                | Description |
+|:--------|:----------------------------------------|:------------|
+| `pain.001.001.03` | SEPA Credit Transfer Initiation | Corporate customers send payment instructions to banks |
+| `pain.002.001.03` | (viewed separately) | Payment status reports (PSRs) from banks |
 
-- `pain.001.001.03` (SEPA Credit Transfer)
-- Based on the ISO 20022 standard, widely used across the EU
-
----
-
-## 🧪 Live Demo
-
-> Run locally by opening `index.html` in your browser.
-
-No dependencies. No build steps. Just drop in your SEPA XML file.
+Each payment file must correctly structure payment details like:
+- Debtor and Creditor names
+- IBANs and BICs
+- Execution dates
+- Amounts and currencies
+- Payment references and remittance information
 
 ---
 
-## 📥 Output
+## 🛠️ Key Features
 
-- **Table view** of all SEPA payments
-- **CSV export** of parsed transactions
-- **SEPA XML file** generation for a selected transaction (converts from batch SEPA payment XML file to desired single transaction XML file)
-
----
-
-## 🔐 Security
-
-Everything runs locally in your browser.
-- No data is sent to any server.
-- Ideal for use with sensitive or confidential SEPA files.
+- Parse and display multiple transactions from uploaded `pain.001.001.03` files
+- Export full transaction lists to CSV
+- Select a single transaction to generate a minimal SEPA XML file
+- Create new SEPA Credit Transfer files manually via a simple form
+- 100% client-side: no server, no upload of sensitive data
+- Styled with **Bulma CSS** for a clean, responsive UI
 
 ---
 
-## 📜 License
+## 🔒 Privacy and Security
 
-MIT — free to use, modify, and integrate.
+Everything happens in your browser — no data is ever sent over the internet.  
+Ideal for payment preparation, as well as inspecting of prepared payments before uploading them to your bank.
 
 ---
 
-## 🤝 Contributions
+## 📥 Technologies Used
 
-PRs and suggestions are welcome! This tool is useful for accountants, book keepers, finance teams, developers, and anyone handling SEPA XMLs.
+- **Bulma CSS** for responsive UI
+- **Vanilla JavaScript** (no frameworks)
+- **ISO 20022 pain.001.001.03** XML schema compliance
+- **Blob & FileReader API** for downloads and file handling
+
+## Info
+
+[SEPA messages: what they are and how they work](https://www.numeral.io/blog/sepa-messages)
+
 
