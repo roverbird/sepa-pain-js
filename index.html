@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>SEPA PAIN XML Viewer and Generator</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+  <style>
+    body { padding: 2em; }
+    table { border-collapse: collapse; width: 100%; margin-top: 2em; }
+    th, td { border: 1px solid #ccc; padding: 8px; text-align: left; }
+    th:first-child, td:first-child { text-align: center; }
+    .section { margin-top: 3em; }
+  </style>
+</head>
+<body>
+
+<section class="section">
+  <h1 class="title">SEPA PAIN XML Viewer and Parser</h1>
+<div class="box">
+[🇸🇮] SEPA PAIN XML Viewer and Generator je preprosta spletna aplikacija, ki omogoča podjetjem pregledovanje, izvoz in ustvarjanje SEPA plačilnih nalogov v standardu ISO 20022 (pain.001.001.03). Uporabniki lahko naložijo obstoječe SEPA XML datoteke, pregledajo posamezna plačila, jih izvozijo v CSV ali ustvarijo nove SEPA plačilne naloge prek enostavnega spletnega obrazca. Vse se obdeluje lokalno v brskalniku, brez pošiljanja podatkov na strežnike.
+<br>
+[🇬🇧] SEPA PAIN XML Viewer and Generator is a simple web application that allows companies to view, export and create SEPA payment orders in the ISO 20022 standard (pain.001.001.03). Users can upload existing SEPA XML files, view individual payments, export them to CSV or create new SEPA payment orders via a simple web form. Everything is processed locally in the browser, without sending data to servers.
+ <a href="https://github.com/roverbird/sepa-pain-js">Help</a>
+</div>
+
+<div class="file">
+  <label class="file-label">
+    <input class="file-input" type="file" id="xmlFile" accept=".xml" />
+    <span class="file-cta">
+      <span class="file-icon">
+        <i class="fas fa-upload"></i>
+      </span>
+      <span class="file-label"> Choose a SEPA XML file… </span>
+    </span>
+  </label>
+</div>
+
+    <div id="output" class="mt-5 is-size-7"></div>
+
+    <div class="buttons mt-5">
+      <button class="button is-link" id="downloadBtn" style="display:none;">Download CSV</button>
+      <button class="button is-primary" id="downloadXmlBtn" style="display:none;">Download Selected as XML</button>
+    </div>
+  </div>
+</section>
+
+
+  <section class="section">
+    <h1 class="title">Create a New SEPA Payment</h1>
+
+    <div class="box">
+      <form id="sepaForm">
+        <div class="field">
+          <label class="label">Message ID</label>
+          <div class="control">
+            <input class="input" type="text" id="msgId" required placeholder="Unique Message ID">
+          </div>
+        </div>
+
+        <div class="field">
+          <label class="label">Debtor Name</label>
+          <div class="control">
+            <input class="input" type="text" id="debtorName" required>
+          </div>
+        </div>
+
+        <div class="field">
+          <label class="label">Debtor IBAN</label>
+          <div class="control">
+            <input class="input" type="text" id="debtorIban" required>
+          </div>
+        </div>
+
+        <div class="field">
+          <label class="label">Creditor Name</label>
+          <div class="control">
+            <input class="input" type="text" id="creditorName" required>
+          </div>
+        </div>
+
+        <div class="field">
+          <label class="label">Creditor IBAN</label>
+          <div class="control">
+            <input class="input" type="text" id="creditorIban" required>
+          </div>
+        </div>
+
+        <div class="field">
+          <label class="label">Creditor Country</label>
+          <div class="control">
+            <input class="input" type="text" id="creditorCountry" value="SI" required>
+          </div>
+        </div>
+
+        <div class="field">
+          <label class="label">Creditor Address Line 1</label>
+          <div class="control">
+            <input class="input" type="text" id="creditorAdrLine1" required>
+          </div>
+        </div>
+
+        <div class="field">
+          <label class="label">Creditor Address Line 2</label>
+          <div class="control">
+            <input class="input" type="text" id="creditorAdrLine2" required>
+          </div>
+        </div>
+
+        <div class="field">
+          <label class="label">Amount (EUR)</label>
+          <div class="control">
+            <input class="input" type="number" step="0.01" id="amount" required>
+          </div>
+        </div>
+
+        <div class="field">
+          <label class="label">Payment Reference</label>
+          <div class="control">
+            <input class="input" type="text" id="paymentRef" required>
+          </div>
+        </div>
+
+        <div class="field">
+          <label class="label">Remittance Info</label>
+          <div class="control">
+            <input class="input" type="text" id="remittanceInfo" required>
+          </div>
+        </div>
+
+        <div class="field is-grouped">
+          <div class="control">
+            <button type="submit" class="button is-success">Generate SEPA XML</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </section>
+
+  <script src="https://github.com/roverbird/sepa-pain-js/sepa-pain-parser.js"></script>
+  <script src="https://github.com/roverbird/sepa-pain-js/sepa-pain-writer.js"></script>
+
+</body>
+</html>
+
