@@ -181,6 +181,17 @@ document.getElementById('xmlFile').addEventListener('change', function (event) {
   reader.readAsText(file);
 });
 
+
 document.getElementById('downloadBtn').addEventListener('click', downloadCSV);
 document.getElementById('downloadXmlBtn').addEventListener('click', downloadXml);
+document.getElementById('copySelectedBtn').style.display = "inline-block"; 
+
+document.getElementById('copySelectedBtn').addEventListener('click', function () {
+  const selectedIndex = document.querySelector('input[name="txSelect"]:checked')?.value;
+  if (selectedIndex === undefined) return alert("Select a transaction first.");
+  const selectedTx = transactions[Number(selectedIndex)];
+  localStorage.setItem("sepaCopiedTransaction", JSON.stringify(selectedTx));
+  alert("Transaction copied.");
+});
+
 
