@@ -89,3 +89,10 @@ You're **not** generating:
 * Interbank **settlement messages** (`pacs.008`),
 * Payment **status reports** (`pain.002`).
 
+### ToDo
+
+- validate IBAN,
+- automate BIC insertion from IBAN, 
+- generate SEPA XML from user uploaded CSV file.
+- input field validations (must limit input to SEPA allowed char number, mark required fields, etc)
+
