@@ -28,8 +28,20 @@ function downloadCSV() {
   URL.revokeObjectURL(url);
 }
 
+
+function escapeXML(str) {
+  if (typeof str !== 'string') str = String(str);
+  return str
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&apos;");
+}
+
+
 function getText(parent, tag) {
-  return parent?.getElementsByTagNameNS(ns, tag)[0]?.textContent || " ";
+  return parent?.getElementsByTagNameNS(ns, tag)[0]?.textContent?.trim() || " ";
 }
 
 function buildXmlForTransaction(index) {
@@ -39,44 +51,44 @@ function buildXmlForTransaction(index) {
     `<Document xmlns="${ns}" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="${ns} ./pain.001.001.03.xsd">`,
     `  <CstmrCdtTrfInitn>`,
     `    <GrpHdr>`,
-    `      <MsgId>${tx.MsgId}</MsgId>`,
-    `      <CreDtTm>${tx.CreationDate}</CreDtTm>`,
+    `      <MsgId>${escapeXML(tx.MsgId)}</MsgId>`,
+    `      <CreDtTm>${escapeXML(tx.CreationDate)}</CreDtTm>`,
     `      <NbOfTxs>1</NbOfTxs>`,
-    `      <CtrlSum>${tx.Amount}</CtrlSum>`,
-    `      <InitgPty><Nm>${tx.DebtorName}</Nm></InitgPty>`,
+    `      <CtrlSum>${escapeXML(tx.Amount)}</CtrlSum>`,
+    `      <InitgPty><Nm>${escapeXML(tx.DebtorName)}</Nm></InitgPty>`,
     `    </GrpHdr>`,
     `    <PmtInf>`,
     `      <PmtInfId>SingleTx</PmtInfId>`,
     `      <PmtMtd>TRF</PmtMtd>`,
-    `      <ReqdExctnDt>${tx.ExecutionDate}</ReqdExctnDt>`,
-    `      <Dbtr><Nm>${tx.DebtorName}</Nm></Dbtr>`,
-    `      <DbtrAcct><Id><IBAN>${tx.DebtorIBAN}</IBAN></Id><Ccy>${tx.Currency}</Ccy></DbtrAcct>`,
+    `      <ReqdExctnDt>${escapeXML(tx.ExecutionDate)}</ReqdExctnDt>`,
+    `      <Dbtr><Nm>${escapeXML(tx.DebtorName)}</Nm></Dbtr>`,
+    `      <DbtrAcct><Id><IBAN>${escapeXML(tx.DebtorIBAN)}</IBAN></Id><Ccy>${escapeXML(tx.Currency)}</Ccy></DbtrAcct>`,
     `      <PmtTpInf>`,
-    `        <SvcLvl><Cd>${tx.ServiceLevelCode}</Cd></SvcLvl>`,
-    `        <LclInstrm><Prtry>${tx.LocalInstrumentProprietary}</Prtry></LclInstrm>`,
-    `        <CtgyPurp><Cd>${tx.CategoryPurpose}</Cd></CtgyPurp>`,
+    `        <SvcLvl><Cd>${escapeXML(tx.ServiceLevelCode)}</Cd></SvcLvl>`,
+    `        <LclInstrm><Prtry>${escapeXML(tx.LocalInstrumentProprietary)}</Prtry></LclInstrm>`,
+    `        <CtgyPurp><Cd>${escapeXML(tx.CategoryPurpose)}</Cd></CtgyPurp>`,
     `      </PmtTpInf>`,
     `      <CdtTrfTxInf>`,
     `        <PmtId><EndToEndId>SEPA-SINGLE</EndToEndId></PmtId>`,
-    `        <Amt><InstdAmt Ccy="${tx.Currency}">${tx.Amount}</InstdAmt></Amt>`,
-    `        <CdtrAgt><FinInstnId><BIC>${tx.CreditorBIC}</BIC></FinInstnId></CdtrAgt>`,
+    `        <Amt><InstdAmt Ccy="${escapeXML(tx.Currency)}">${escapeXML(tx.Amount)}</InstdAmt></Amt>`,
+    `        <CdtrAgt><FinInstnId><BIC>${escapeXML(tx.CreditorBIC)}</BIC></FinInstnId></CdtrAgt>`,
     `        <Cdtr>`,
-    `          <Nm>${tx.CreditorName}</Nm>`,
+    `          <Nm>${escapeXML(tx.CreditorName)}</Nm>`,
     `          <PstlAdr>`,
-    `            <Ctry>${tx.CreditorCountry}</Ctry>`,
-    `            <AdrLine>${tx.CreditorAdrLine1}</AdrLine>`,
-    `            <AdrLine>${tx.CreditorAdrLine2}</AdrLine>`,
+    `            <Ctry>${escapeXML(tx.CreditorCountry)}</Ctry>`,
+    `            <AdrLine>${escapeXML(tx.CreditorAdrLine1)}</AdrLine>`,
+    `            <AdrLine>${escapeXML(tx.CreditorAdrLine2)}</AdrLine>`,
     `          </PstlAdr>`,
     `        </Cdtr>`,
-    `        <CdtrAcct><Id><IBAN>${tx.CreditorIBAN}</IBAN></Id></CdtrAcct>`,
-    `        <ChrgBr>${tx.ChargeBearer}</ChrgBr>`,
+    `        <CdtrAcct><Id><IBAN>${escapeXML(tx.CreditorIBAN)}</IBAN></Id></CdtrAcct>`,
+    `        <ChrgBr>${escapeXML(tx.ChargeBearer)}</ChrgBr>`,
     `        <RmtInf>`,
     `          <Strd>`,
     `            <CdtrRefInf>`,
     `              <Tp><CdOrPrtry><Cd>SCOR</Cd></CdOrPrtry></Tp>`,
-    `              <Ref>${tx.Reference}</Ref>`,
+    `              <Ref>${escapeXML(tx.Reference)}</Ref>`,
     `            </CdtrRefInf>`,
-    `            <AddtlRmtInf>${tx.RemittanceInfo}</AddtlRmtInf>`,
+    `            <AddtlRmtInf>${escapeXML(tx.RemittanceInfo)}</AddtlRmtInf>`,
     `          </Strd>`,
     `        </RmtInf>`,
     `      </CdtTrfTxInf>`,
@@ -86,6 +98,7 @@ function buildXmlForTransaction(index) {
   ];
   return xmlParts.join("\n");
 }
+
 
 function downloadXml() {
   const selectedIndex = document.querySelector('input[name="txSelect"]:checked')?.value;
@@ -184,5 +197,4 @@ document.getElementById('xmlFile').addEventListener('change', function (event) {
 
 document.getElementById('downloadBtn').addEventListener('click', downloadCSV);
 document.getElementById('downloadXmlBtn').addEventListener('click', downloadXml);
-
 
