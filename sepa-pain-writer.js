@@ -179,43 +179,4 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 });
 
-document.addEventListener("DOMContentLoaded", function () {
-  const copied = JSON.parse(localStorage.getItem("sepaCopiedTransaction") || "{}");
-
-  if (Object.keys(copied).length > 0) {
-    // Create a new payment block cloned from the existing one
-    const blocks = paymentsContainer.querySelectorAll('.payment-block');
-    const lastBlock = blocks[blocks.length - 1];
-    const template = document.getElementById('payment-block-template');
-    const clone = template.content.cloneNode(true);
-    const newBlock = clone.querySelector('.payment-block');
-
-    // Set values from copied object
-    newBlock.querySelector('[name="creditorName"]').value = copied.CreditorName || "";
-    newBlock.querySelector('[name="creditorIban"]').value = copied.CreditorIBAN || "";
-    newBlock.querySelector('[name="creditorBic"]').value = copied.CreditorBIC || "";
-    newBlock.querySelector('[name="creditorCountry"]').value = copied.CreditorCountry || "";
-    newBlock.querySelector('[name="creditorAdrLine1"]').value = copied.CreditorAdrLine1 || "";
-    newBlock.querySelector('[name="creditorAdrLine2"]').value = copied.CreditorAdrLine2 || "";
-    newBlock.querySelector('[name="amount"]').value = copied.Amount || "";
-    newBlock.querySelector('[name="paymentRef"]').value = copied.Reference || "";
-    newBlock.querySelector('[name="remittanceInfo"]').value = copied.RemittanceInfo || "";
-    newBlock.querySelector('[name="instructionPriority"]').value = copied.InstructionPriority || "NORM";
-    newBlock.querySelector('[name="purposeCode"]').value = copied.PurposeCode || "INTX";
-
-    // Add remove button functionality
-    newBlock.querySelector('.remove-payment-btn').addEventListener('click', () => {
-      if (paymentsContainer.querySelectorAll('.payment-block').length > 1) {
-        newBlock.remove();
-      } else {
-        alert("At least one payment is required.");
-      }
-    });
-
-    // Add to DOM
-    paymentCount++;
-    newBlock.querySelector('.tag').textContent = `Payment ${paymentCount}`;
-    paymentsContainer.appendChild(newBlock);
-  }
-});
 
