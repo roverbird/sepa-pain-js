@@ -59,7 +59,7 @@ function buildXmlForTransaction(index) {
     `      <CdtTrfTxInf>`,
     `        <PmtId><EndToEndId>SEPA-SINGLE</EndToEndId></PmtId>`,
     `        <Amt><InstdAmt Ccy="${tx.Currency}">${tx.Amount}</InstdAmt></Amt>`,
-    `        <CdtrAgt><FinInstnId><BIC>${tx.CreditorAgentBIC}</BIC></FinInstnId></CdtrAgt>`,
+    `        <CdtrAgt><FinInstnId><BIC>${tx.CreditorBIC}</BIC></FinInstnId></CdtrAgt>`,
     `        <Cdtr>`,
     `          <Nm>${tx.CreditorName}</Nm>`,
     `          <PstlAdr>`,
@@ -157,7 +157,7 @@ document.getElementById('xmlFile').addEventListener('change', function (event) {
           CreditorCountry: cdtrAddr?.getElementsByTagNameNS(ns, "Ctry")[0]?.textContent || " ",
           CreditorAdrLine1: addrLines[0] || "",
           CreditorAdrLine2: addrLines[1] || "",
-          CreditorAgentBIC: bic,
+          CreditorBIC: bic,
           ChargeBearer: getText(tx, "ChrgBr")
         });
       });
