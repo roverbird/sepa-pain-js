@@ -1,9 +1,6 @@
+SEPA PAIN XML Viewer and Generator je preprosta spletna aplikacija, ki omogoča podjetjem pregledovanje, izvoz in ustvarjanje SEPA plačilnih nalogov v standardu ISO 20022 (pain.001.001.03). Uporabniki lahko naložijo obstoječe SEPA XML datoteke, pregledajo posamezna plačila, jih izvozijo v CSV ali ustvarijo nove SEPA plačilne naloge prek enostavnega spletnega obrazca. Vse se obdeluje lokalno v brskalniku, brez pošiljanja podatkov na strežnike.
 
-**Create and edit SEPA PAIN batch payments. View existing payments, extract single payment out of a multiple XML payment file. Write multiple SEPA XML payment file. On-line free app, not registration, client side only, private and anon, no data stored in the cloud or on servers. A secure tool for corporate accouning and book-keeping.** 
-
-Online app: [kibervarnost.si/sepaviewer](https://kibervarnost.si/sepaviewer/)
-
-[SI] SEPA PAIN XML Viewer and Generator je preprosta spletna aplikacija, ki omogoča podjetjem pregledovanje, izvoz in ustvarjanje SEPA plačilnih nalogov v standardu ISO 20022 (pain.001.001.03). Uporabniki lahko naložijo obstoječe SEPA XML datoteke, pregledajo posamezna plačila, jih izvozijo v CSV ali ustvarijo nove SEPA plačilne naloge prek enostavnega spletnega obrazca. Vse se obdeluje lokalno v brskalniku, brez pošiljanja podatkov na strežnike.
+Online demo: 
 
 ## 📄 About SEPA XML
 

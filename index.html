@@ -4,13 +4,16 @@
   <meta charset="UTF-8">
   <title>SEPA PAIN XML Viewer and Generator</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
-  <style>
-    body { padding: 2em; }
-    table { border-collapse: collapse; width: 100%; margin-top: 2em; }
-    th, td { border: 1px solid #ccc; padding: 8px; text-align: left; }
-    th:first-child, td:first-child { text-align: center; }
-    .section { margin-top: 3em; }
-  </style>
+<style>
+  body { padding: 2em; }
+  table { border-collapse: collapse; width: 100%; margin-top: 2em; }
+  th, td { border: 1px solid #ccc; padding: 8px; text-align: left; }
+  th:first-child, td:first-child { text-align: center; }
+  .section { margin-top: 3em; }
+  .very-small {
+    font-size: 0.6em; 
+  }
+</style>
 </head>
 
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-6SF8W94XHW"></script>
@@ -20,7 +23,6 @@
   gtag('js', new Date());
   gtag('config', 'G-6SF8W94XHW');
 </script>
-
 <body>
 
 <section class="section">
@@ -32,7 +34,7 @@
 <br> <b>Help: <a href="https://github.com/roverbird/sepa-pain-js">SEPA-PAIN-JS</a></b>
 </div>
 
-  <h2 class="title">View existing SEPA Payment</h2>
+<h2 class="title">View existing SEPA Payment</h2>
 
 <div class="file">
   <label class="file-label">
@@ -46,7 +48,7 @@
   </label>
 </div>
 
-    <div id="output" class="mt-5 is-size-7"></div>
+    <div id="output" class="mt-5 very-small"></div>
 
     <div class="buttons mt-5">
       <button class="button is-link" id="downloadBtn" style="display:none;">Download CSV</button>
@@ -68,19 +70,34 @@
         </div>
       </div>
 
-      <div class="field">
-        <label class="label">Debtor Name</label>
-        <div class="control">
-          <input class="input" type="text" id="debtorName" required>
-        </div>
-      </div>
-
-      <div class="field">
-        <label class="label">Debtor IBAN</label>
-        <div class="control">
-          <input class="input" type="text" id="debtorIban" required>
-        </div>
-      </div>
+    <div class="field">
+      <label class="label">Debtor Name</label>
+      <div class="control"><input class="input" type="text" id="debtorName" required></div>
+    </div>
+    <div class="field">
+      <label class="label">Debtor IBAN</label>
+      <div class="control"><input class="input" type="text" id="debtorIban" required></div>
+    </div>
+    <div class="field">
+      <label class="label">Debtor Country</label>
+      <div class="control"><input class="input" type="text" id="debtorCountry"></div>
+    </div>
+    <div class="field">
+      <label class="label">Debtor Address Line 1</label>
+      <div class="control"><input class="input" type="text" id="debtorAdrLine1"></div>
+    </div>
+    <div class="field">
+      <label class="label">Debtor Address Line 2</label>
+      <div class="control"><input class="input" type="text" id="debtorAdrLine2"></div>
+    </div>
+    <div class="field">
+      <label class="label">Debtor BIC</label>
+      <div class="control"><input class="input" type="text" id="debtorBic"></div>
+    </div>
+    <div class="field">
+      <label class="label">Debtor Org ID</label>
+      <div class="control"><input class="input" type="text" id="debtorOrgId" placeholder="e.g. 123456789"></div>
+    </div>
 
       <!-- Dynamic payment blocks start here -->
       <div id="paymentsContainer">
@@ -100,9 +117,62 @@
   </div>
 </section>
 
+<!-- new payment template --->
+<template id="payment-block-template">
+  <div class="payment-block box mb-4">
+    <button type="button" class="button is-small is-danger remove-payment-btn" style="float: right;">Remove</button>
+    <h4 class="tag is-info mb-2"></h4>
+    <div class="field">
+      <label class="label">Creditor Name</label>
+      <div class="control"><input class="input" type="text" name="creditorName" required></div>
+    </div>
+    <div class="field">
+      <label class="label">Creditor IBAN</label>
+      <div class="control"><input class="input" type="text" name="creditorIban" required></div>
+    </div>
+    <div class="field">
+      <label class="label">Creditor BIC</label>
+      <div class="control"><input class="input" type="text" name="creditorBic"></div>
+    </div>
+    <div class="field">
+      <label class="label">Creditor Country</label>
+      <div class="control"><input class="input" type="text" name="creditorCountry"></div>
+    </div>
+    <div class="field">
+      <label class="label">Creditor Address Line 1</label>
+      <div class="control"><input class="input" type="text" name="creditorAdrLine1"></div>
+    </div>
+    <div class="field">
+      <label class="label">Creditor Address Line 2</label>
+      <div class="control"><input class="input" type="text" name="creditorAdrLine2"></div>
+    </div>
+    <div class="field">
+      <label class="label">Amount (EUR)</label>
+      <div class="control"><input class="input" type="number" step="0.01" name="amount" required></div>
+    </div>
+    <div class="field">
+      <label class="label">Payment Reference</label>
+      <div class="control"><input class="input" type="text" name="paymentRef"></div>
+    </div>
+    <div class="field">
+      <label class="label">Remittance Information</label>
+      <div class="control"><input class="input" type="text" name="remittanceInfo"></div>
+    </div>
+    <div class="field">
+      <label class="label">Instruction Priority</label>
+      <div class="control"><input class="input" type="text" name="instructionPriority" placeholder="NORM"></div>
+    </div>
+    <div class="field">
+      <label class="label">Purpose Code</label>
+      <div class="control"><input class="input" type="text" name="purposeCode" placeholder=" "></div>
+    </div>
+  </div>
+</template>
 
-  <script src="./sepa-pain-parser.js"></script>
-  <script src="./sepa-pain-writer.js"></script>
+<!--- template end --->
+
+<script src="./sepa-pain-parser.js"></script>
+<script src="./sepa-pain-writer.js"></script>
 
 </body>
 </html>
